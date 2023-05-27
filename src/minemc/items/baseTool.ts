@@ -8,13 +8,15 @@ export abstract class BaseTool {
     name: string;
     type: number;
     id: number;
-    xp: number = 0;
-    level: number = 0;
+    xp: number;
+    level: number ;
     enchantments: Enchantments = {};
     constructor(name: string, type: number, id: number){
         this.name = name;
         this.type = type;
         this.id = id;
+        this.xp = 0;
+        this.level = 1;
     }
     setXp(xp: number): void {
         this.xp = xp;

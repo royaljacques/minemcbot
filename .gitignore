@@ -1,6 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
-.vscode
+.vscode/
 ### Node ###
 # Logs
 logs
@@ -139,5 +139,4 @@ dist
 # Optional stylelint cache
 
 
-# End of https://www.toptal.com/developers/gitignore/api/node
 .vscode/symbols.json
