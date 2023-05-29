@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import WoodenPickaxe from "../src/minemc/items/pickaxe/wooden_pickaxe";
+import WoodenPickaxe from "../minemc/items/pickaxe/wooden_pickaxe";
  
 test("wooden_pickaxe", () => {
   const wooden_pickaxe = new WoodenPickaxe();
