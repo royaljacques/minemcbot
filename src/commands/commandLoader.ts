@@ -1,4 +1,4 @@
-import { Collection} from "discord.js";
+import { Collection, Routes} from "discord.js";
 import { readdirSync } from "fs";
 import BaseCommand from "./baseCommands";
 import Index from "..";
@@ -39,9 +39,15 @@ export default class CommandLoader {
      * Register the slash commands (use it when the client is ready)
      */
   public async register() : Promise<void> {
-    await (await Index.instance.getGuild()).commands.set(
-      this.commands.map(command => command.slashCommand.toJSON())
+    
+    if(Index.instance.user === null) throw new Error("Client is not ready");
+    await Index.instance.rest.put(Routes.applicationCommands(
+      Index.instance.user.id), 
+      { 
+        body: this.commands.map(command => command.slashCommand.toJSON()) 
+      }
     );
+  
   }
    
 

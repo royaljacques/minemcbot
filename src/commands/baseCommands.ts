@@ -1,5 +1,11 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
+
+export const CommandsType = {
+  MODERATION: "moderation",
+  GAMEPLAY: "gameplay",
+  FUN: "fun",
+}
 export default abstract class BaseCommand {
 
     public abstract readonly slashCommand: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
@@ -7,7 +13,9 @@ export default abstract class BaseCommand {
     get name(): string {
       return this.slashCommand.name;
     }
-
+    public abstract help: {name: string, description: string, category: string} ;
+    
+   
     get description(): string {
       return this.slashCommand.description;
     }
