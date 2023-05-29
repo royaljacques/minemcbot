@@ -2,6 +2,8 @@ import { Client as DiscordClient, GatewayIntentBits, Guild, Partials} from "disc
 import CommandLoader from "./commands/commandLoader";
 import { getStringEnv } from "./util/env-variable";
 import EventManager from "./events/EventManager";
+import { PrismaClient } from "@prisma/client";
+
 export default class Index extends DiscordClient {
 
   public static instance: Index;
@@ -10,6 +12,8 @@ export default class Index extends DiscordClient {
   public readonly eventManager: EventManager;
 
   public readonly commandManager: CommandLoader;
+
+  public readonly databaseManager: PrismaClient
 
   //public readonly taskManager: TaskManager;
 
@@ -25,14 +29,15 @@ export default class Index extends DiscordClient {
     });
 
     // Create bot instance and login it :
+    this.databaseManager = new PrismaClient();
     Index.instance = this;
-    this.login(getStringEnv("BOT_TOKEN"));
+    
     this.commandManager = new CommandLoader();
 
     // Load events, commands and tasks managers :
     this.eventManager = new EventManager();
-  
     //this.taskManager = new TaskManager();
+    this.login(getStringEnv("BOT_TOKEN"));
   }
 
   public async getGuild(): Promise<Guild> {
