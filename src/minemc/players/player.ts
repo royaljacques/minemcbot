@@ -5,6 +5,7 @@ export default class Player {
     xp: number;
     level: number;
     map_name: string;
+    itemInHand: number | null
     constructor(
         pseudo: string,
         discordId: string,
@@ -19,6 +20,7 @@ export default class Player {
         this.xp = xp;
         this.level = level;
         this.map_name = map_name;
+        this.itemInHand = null;
     }
     getLevel() {
         return this.level;
@@ -55,5 +57,11 @@ export default class Player {
     }
     setDiscordId(discordId: string) {
         this.discordId = discordId;
+    }
+    setItemInHand(itemInHand: number) {
+        this.itemInHand = itemInHand;
+    }
+    getItemInHand(): number | null {
+        return this.itemInHand;
     }
 }
