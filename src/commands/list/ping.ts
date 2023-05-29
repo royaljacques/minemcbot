@@ -11,7 +11,7 @@ export default class Ping extends BaseCommand {
   public readonly help = {
     "name": "ping",
     "description": "renvoie pong", 
-    "category": CommandsType.GAMEPLAY
+    "category": CommandsType.FUN
   }
   public async execute(command: ChatInputCommandInteraction) : Promise<void> {
     await command.reply("Pong !")

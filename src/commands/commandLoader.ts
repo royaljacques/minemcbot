@@ -6,7 +6,7 @@ import Index from "..";
 export default class CommandLoader {
 
   public readonly commands: Collection<string, BaseCommand> = new Collection();
-
+  public static helpCommandStorages: Collection<string, Collection<string, string> >= new Collection();
   constructor() {
     this.load().then(() => this.listener());
   }
@@ -14,14 +14,27 @@ export default class CommandLoader {
   private async load() : Promise<void> {
     const files = readdirSync(`${__dirname}/list`).filter(file => file.endsWith(".ts") || file.endsWith(".js"));
 
-    let i = 0;
+    const i = 0;
     for (const file of files) {
       const dynamicImport = await import(`./list/${file}`);
       const command: BaseCommand = new dynamicImport.default();
       this.commands.set(command.name, command);
-      i++;
-    }
 
+      
+      const collection = CommandLoader.helpCommandStorages.get(command.help.category);
+      if(collection === undefined){ 
+        CommandLoader.helpCommandStorages.set(command.help.category, new Collection<string, string>().set(command.help.name, command.help.description));
+      }else{
+        const help =Array.from(collection);
+        help.push([command.help.name, command.help.description]);
+        const col = new Collection<string, string>();
+        help.map((value) => {
+          col.set(value[0], value[1])
+        });
+        CommandLoader.helpCommandStorages.set(command.help.category, col);
+      }
+    }
+    console.log(CommandLoader.helpCommandStorages);
     console.info(`${i} commands loaded`);
   }
 
