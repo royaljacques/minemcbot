@@ -5,7 +5,8 @@ export const CommandsType = {
   MODERATION: "moderation",
   GAMEPLAY: "gameplay",
   FUN: "fun",
-  GAME: "game"
+  GAME: "game",
+  MISC: "misc"
 }
 export default abstract class BaseCommand {
 

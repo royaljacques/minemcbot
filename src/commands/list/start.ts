@@ -12,10 +12,11 @@ export default class Start extends BaseCommand {
         .setDescription("starts the game");
 
     public readonly help = {
-        "name": "ping",
+        "name": "start",
         "description": "starts the game",
-        "category": CommandsType.GAME
+        "category": CommandsType.GAMEPLAY
     }
+
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
         const player = await prisma.player.findUnique({
             where: {
@@ -45,7 +46,7 @@ export default class Start extends BaseCommand {
                         data: {
                             discordId: command.user.id,
                             pseudo: pseudo,
-                            language: "fr",
+                            language: "EN_en",
                             mana: 20,
                             manaMax: 20,
                             xp: 0,
