@@ -26,26 +26,18 @@ export default class Start extends BaseCommand {
             const modal = new ModalBuilder()
                 .setCustomId('myModal')
                 .setTitle('My Modal');
-
-            // Add components to modal
-
-            // Create the text input components
             const favoriteColorInput = new TextInputBuilder()
                 .setCustomId('game:start:pseudo')
                 .setLabel("what nickname would you like to have?")
                 .setStyle(TextInputStyle.Short);
-            const firstActionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(favoriteColorInput);
-            modal.addComponents(firstActionRow);
-            await command.showModal(modal);
+            await command.showModal(modal.addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(favoriteColorInput)));
             const submitted = await command.awaitModalSubmit({
                 time: 60000,
                 filter: i => i.user.id === command.user.id,
             }).catch(() => {
-                command.channel?.send({embeds:[ ErrorMessages("You took too long, please try again")]})
-                // Catch any Errors that are thrown (e.g. if the awaitModalSubmit times out after 60000 ms)
+                command.channel?.send({ embeds: [ErrorMessages("You took too long, please try again")] });
                 return null
             })
-            // Add inputs to the modal
             if (submitted) {
                 const pseudo = submitted.fields.getTextInputValue('game:start:pseudo');
                 try {
@@ -72,11 +64,12 @@ export default class Start extends BaseCommand {
                         return;
                     }
                 } catch (e) {
-                    if(e instanceof Prisma.PrismaClientKnownRequestError)EmbedErrorLogger(e.message);
+                    if (e instanceof Prisma.PrismaClientKnownRequestError) EmbedErrorLogger(e.message);
                     await submitted.reply({ embeds: [ErrorMessages("An error occured while creating your account, please try again later.")] })
                     return;
                 }
-            } } else {
+            }
+        } else {
             await command.reply({ embeds: [ErrorMessages("You already have an account!")] })
             return;
         }
