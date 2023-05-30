@@ -14,7 +14,7 @@ export default class CommandLoader {
   private async load() : Promise<void> {
     const files = readdirSync(`${__dirname}/list`).filter(file => file.endsWith(".ts") || file.endsWith(".js"));
 
-    const i = 0;
+    let i = 0;
     for (const file of files) {
       const dynamicImport = await import(`./list/${file}`);
       const command: BaseCommand = new dynamicImport.default();
@@ -33,8 +33,8 @@ export default class CommandLoader {
         });
         CommandLoader.helpCommandStorages.set(command.help.category, col);
       }
+      ++i;
     }
-    console.log(CommandLoader.helpCommandStorages);
     console.info(`${i} commands loaded`);
   }
 
