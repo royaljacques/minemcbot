@@ -1,9 +1,10 @@
-import { Client as DiscordClient, GatewayIntentBits, Guild, Partials} from "discord.js";
+import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, TextChannel} from "discord.js";
 import CommandLoader from "./commands/commandLoader";
 import { getStringEnv } from "./util/env-variable";
 import EventManager from "./events/EventManager";
 import { PrismaClient } from "@prisma/client";
 
+export const prisma = new PrismaClient();
 export default class Index extends DiscordClient {
 
   public static instance: Index;
@@ -12,8 +13,6 @@ export default class Index extends DiscordClient {
   public readonly eventManager: EventManager;
 
   public readonly commandManager: CommandLoader;
-
-  public readonly databaseManager: PrismaClient
 
   //public readonly taskManager: TaskManager;
 
@@ -29,7 +28,6 @@ export default class Index extends DiscordClient {
     });
 
     // Create bot instance and login it :
-    this.databaseManager = new PrismaClient();
     Index.instance = this;
     
     this.commandManager = new CommandLoader();
@@ -42,6 +40,10 @@ export default class Index extends DiscordClient {
 
   public async getGuild(): Promise<Guild> {
     return await this.guilds.fetch("1112068413322428499");
+  }
+
+  public async getLoggerChannel(): Promise<TextChannel> {
+    return await this.channels.fetch("1112920322824474704") as TextChannel;
   }
 }
 
