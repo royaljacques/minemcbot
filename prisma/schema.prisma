@@ -12,10 +12,14 @@ datasource db {
 
 model Player {
   discordId String @id
-  pseudo String
-  lang String
-  xp Int
-  level Int
-  map_name String
-  itemInHand Int
+  pseudo    String @unique
+  language  String
+  mana      Int
+  manaMax   Int
+  xp        Int
+  xpMax     Int
+  level     Int
+  health    Int
+  healthMax Int
+  power     Int
 }
