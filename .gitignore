@@ -142,3 +142,4 @@ dist
 .vscode/symbols.json
 
 build/
+prisma/migrations/
