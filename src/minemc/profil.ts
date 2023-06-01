@@ -8,8 +8,10 @@ export default class Profil {
     pv: number;
     //power for attack boss
     power: number;
+    maxPower: number;
+    language: string;
 
-    constructor(discordId: string, mana: number, manaMax: number, xp: number, level: number, pv: number, power: number){
+    constructor(discordId: string, mana: number, manaMax: number, xp: number, level: number, pv: number, power: number, maxPower: number, language: string){
         this.discordId = discordId;
         this.mana = mana;
         this.manaMax = manaMax;
@@ -17,5 +19,7 @@ export default class Profil {
         this.level = level;
         this.pv = pv;
         this.power = power;
+        this.maxPower = maxPower;
+        this.language = language;
     }
 }

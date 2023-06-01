@@ -1,13 +1,14 @@
-import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, TextChannel} from "discord.js";
+import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, TextChannel } from "discord.js";
 import CommandLoader from "./commands/commandLoader";
 import { getStringEnv } from "./util/env-variable";
 import EventManager from "./events/EventManager";
 import { PrismaClient } from "@prisma/client";
-
+import "./util/langs/EN_en.json"
 export const prisma = new PrismaClient();
 export default class Index extends DiscordClient {
 
   public static instance: Index;
+  public static startBotTime: number;
 
   // Events and commands managers :
   public readonly eventManager: EventManager;
@@ -17,6 +18,7 @@ export default class Index extends DiscordClient {
   //public readonly taskManager: TaskManager;
 
   constructor() {
+
     super({
       intents: [
         GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
@@ -26,12 +28,10 @@ export default class Index extends DiscordClient {
       ],
       partials: [Partials.Message, Partials.Channel, Partials.Reaction]
     });
-
+    Index.startBotTime = Date.parse(new Date().toString()) / 1000;
     // Create bot instance and login it :
     Index.instance = this;
-    
     this.commandManager = new CommandLoader();
-
     // Load events, commands and tasks managers :
     this.eventManager = new EventManager();
     //this.taskManager = new TaskManager();

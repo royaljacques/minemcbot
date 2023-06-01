@@ -22,4 +22,5 @@ model Player {
   health    Int
   healthMax Int
   power     Int
+  maxPower  Int
 }

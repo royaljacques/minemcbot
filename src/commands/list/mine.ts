@@ -12,8 +12,6 @@ export default class Mine extends BaseCommand{
         .setDescription("mining in the mine");
 
     async execute(command: ChatInputCommandInteraction): Promise<void> {
-        //get if user exist in prismadb
-
         const player = await prisma.player.findUnique({
             where: {
                 discordId: command.user.id
@@ -23,6 +21,6 @@ export default class Mine extends BaseCommand{
             await command.reply("You are not registered in the database, please use /start");
             return;
         }
-        await command.reply("Pong !")
+        await command.reply("the bot is not yet finished, please wait for the next update")
     }
 }

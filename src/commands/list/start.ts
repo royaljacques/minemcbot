@@ -55,6 +55,8 @@ export default class Start extends BaseCommand {
                             health: 50,
                             healthMax: 50,
                             power: 10,
+                            maxPower: 10,
+                            
                         }
                     });
                     if (!newplayer) {
