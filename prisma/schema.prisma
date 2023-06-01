@@ -23,4 +23,26 @@ model Player {
   healthMax Int
   power     Int
   maxPower  Int
+  itemInHand Int?
+}
+
+model Inventory {
+  discordID String  @id @unique
+  items     Tools[]
+}
+
+model Tools {
+  id                 Int            @id @default(autoincrement())
+  level              Int            @default(0) 
+  type               String
+  enchantments        Enchantments[] 
+  Inventory          Inventory?     @relation(fields: [inventoryDiscordID], references: [discordID])
+  inventoryDiscordID String?
+}
+
+model Enchantments {
+  id      Int    @id @default(autoincrement())
+  type    String
+  tools   Tools? @relation(fields: [toolsId], references: [id])
+  toolsId Int?
 }
