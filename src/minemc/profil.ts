@@ -1,4 +1,4 @@
-import { Player } from "@prisma/client";
+
 import { prisma } from "..";
 import { Inventory } from "./inventory";
 
@@ -43,10 +43,11 @@ export default class Profil {
         return this.Inventory;
     }
 
+    //getter of item in hand for using mine / chop / dig / attack / farme
     getItemInHand(): number | null{
         return this.hand;
     }
-    async setItemInHand(id: number): Promise<Player>{
+    async setItemInHand(id: number): Promise<Profil>{
         this.hand = id;
         const update = await prisma.player.update({
             where: {
@@ -56,6 +57,25 @@ export default class Profil {
                 itemInHand: id
             }
         })
-        return update;
+        return this;
+    }
+    async save(): Promise<Profil>{
+        const update = await prisma.player.update({
+            where: {
+                discordId: this.discordId
+            },
+            data: {
+                mana: this.mana,
+                manaMax: this.manaMax,
+                xp: this.xp,
+                level: this.level,
+                health: this.pv,
+                power: this.power,
+                maxPower: this.maxPower,
+                language: this.language,
+                itemInHand: this.hand
+            }
+        })
+        return this;
     }
 }

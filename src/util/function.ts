@@ -1,6 +1,7 @@
 import { Colors, EmbedBuilder } from "discord.js"
 import Index, { prisma } from "..";
 import Profil from "../minemc/profil";
+import { Prisma } from "@prisma/client";
 
 export const ErrorMessages = (message: string): EmbedBuilder => {
     const embed = new EmbedBuilder()
@@ -32,5 +33,18 @@ export const getUser = async(discordId: string): Promise<Profil | null>  => {
     if (prismaUser == null) {
         return null;
     }
-    return new Profil(prismaUser.discordId, prismaUser.mana, prismaUser.manaMax, prismaUser.xp, prismaUser.level, prismaUser.health, prismaUser.power, prismaUser.maxPower, prismaUser.language);
+    return new Profil(prismaUser.discordId, prismaUser.mana, prismaUser.manaMax, prismaUser.xp, prismaUser.level, prismaUser.health, prismaUser.power, prismaUser.maxPower, prismaUser.language, prismaUser.itemInHand ?? null);
+}
+
+
+export const createPickaxe = async(discordId: string): Promise<{ id: number, type: string, level: number, discordId: string }> => {
+    const pickaxe = await prisma.item.create({
+        data: {
+            type: "PICKAXE",
+            discordId: discordId
+        }
+    })
+    console.log(pickaxe);
+    
+    return pickaxe;
 }
