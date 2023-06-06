@@ -1,7 +1,6 @@
 import { Colors, EmbedBuilder } from "discord.js"
 import Index, { prisma } from "..";
 import Profil from "../minemc/profil";
-import { Prisma } from "@prisma/client";
 
 export const ErrorMessages = (message: string): EmbedBuilder => {
     const embed = new EmbedBuilder()

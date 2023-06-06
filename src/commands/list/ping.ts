@@ -1,7 +1,6 @@
 import BaseCommand from "../baseCommands";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { CommandsType } from "../baseCommands";
-import { getUser } from "../../util/function";
 
 export default class Ping extends BaseCommand {
 

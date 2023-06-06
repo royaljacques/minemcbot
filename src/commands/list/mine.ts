@@ -2,7 +2,6 @@ import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "
 import BaseCommand, { CommandsType } from "../baseCommands";
 import { prisma } from "../..";
 import { EmbedErrorLogger, createPickaxe, getUser } from "../../util/function";
-import { ToolType } from "../../minemc/items/tools";
 export default class Mine extends BaseCommand {
     public readonly help = {
         "name": "mine",
@@ -39,23 +38,30 @@ export default class Mine extends BaseCommand {
         }
         const multipl = this.getMultiplieRecolt(pickaxe.level);
         if (multipl === undefined) {
-            EmbedErrorLogger("Error in getMultiplieRecolt function, undeined value by level");
+            EmbedErrorLogger("Error in getMultiplieRecolt function, undefined value by level");
             command.editReply("Error contact the developper (/info)");
             return;
         }
         const recolt = Math.floor(Math.random() * (multipl * 5 - 1) + 1);
-        const result = Object.entries(this.mine(recolt)).map(([key, value]) => 
-            `${key}: ${value}`
-            ).join("\n");
-
+        const mine = this.mine(recolt, pickaxe.level);
+        const xpManager = player.getXpManager().gainXP(mine.xp);
+        const result = Object.entries(mine.contents).map(([key, value]) => `${key}: ${value}`).join("\n");
+        
         const embed = new EmbedBuilder()
             .setTitle("Mine")
-            .setDescription(`You have mined ${recolt} blocks`)
-            .addFields({name: "Result", value: result});
-                    
-        await command.channel?.send({embeds: [embed]})
+            .setDescription(`You have mined ${recolt} blocks\nYou've gained ${mine.xp} XP.` + xpManager ? "": "")
+            .addFields({ name: "Result", value: result });
+
+        try{
+            player.save();
+        }catch(e){
+            console.log(e);
+        }
+        await command.channel?.send({ embeds: [embed] })
         await command.editReply("the bot is not yet finished, please wait for the next update")
+
     }
+
     getMultiplieRecolt(toolLevel: number): number | undefined {
         if (toolLevel >= 0 && toolLevel <= 10) return 1;
         if (toolLevel > 10 && toolLevel <= 20) return 2;
@@ -65,24 +71,32 @@ export default class Mine extends BaseCommand {
         if (toolLevel > 50 && toolLevel <= 60) return 6;
     }
 
-    mine(recoltSize: number) {
+    mine(recoltSize: number, level: number) {
+        let xp = 0;
         let stone = 0;
         let dirt = 0;
         let coal = 0;
         for (let i = 0; i < recoltSize; i++) {
             const random = Math.floor(Math.random() * (100 - 1) + 1);
-            if (random >= 1 && random <= 5) {
-                coal++;
-            } else if (random > 5 && random <= 20) {
-                stone++;
-            } else {
-                dirt++;
+            if (level >= 0 && level <= 10) {
+                if (random >= 1 && random <= 5) {
+                    coal++;
+                } else if (random > 5 && random <= 20) {
+                    stone++;
+                } else {
+                    dirt++;
+                }
+                xp++;
             }
+
         }
         return {
-            stone: stone,
-            dirt: dirt,
-            coal: coal
+            xp: xp,
+            contents: {
+                stone: stone,
+                dirt: dirt,
+                coal: coal
+            }
         }
     }
 }

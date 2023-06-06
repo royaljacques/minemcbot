@@ -1,13 +1,13 @@
 
 import { prisma } from "..";
 import { Inventory } from "./inventory";
+import XpManager from "./player/xpManager";
 
 export default class Profil {
     discordId: string;
     mana: number;
     manaMax: number;
-    xp: number;
-    level: number;
+    private xpManager: XpManager;
     pv: number;
     power: number;
     maxPower: number;
@@ -29,16 +29,18 @@ export default class Profil {
         this.discordId = discordId;
         this.mana = mana;
         this.manaMax = manaMax;
-        this.xp = xp;
-        this.level = level;
         this.pv = pv;
         this.power = power;
         this.maxPower = maxPower;
         this.language = language;
         this.Inventory = new Inventory(discordId);
+        this.xpManager = new XpManager(level, xp);
         this.hand = hand;
     }
 
+    getXpManager(): XpManager {
+        return this.xpManager;
+    }
     getInventory(): Inventory{
         return this.Inventory;
     }
@@ -47,9 +49,10 @@ export default class Profil {
     getItemInHand(): number | null{
         return this.hand;
     }
+
     async setItemInHand(id: number): Promise<Profil>{
         this.hand = id;
-        const update = await prisma.player.update({
+        await prisma.player.update({
             where: {
                 discordId: this.discordId
             },
@@ -60,15 +63,15 @@ export default class Profil {
         return this;
     }
     async save(): Promise<Profil>{
-        const update = await prisma.player.update({
+        await prisma.player.update({
             where: {
                 discordId: this.discordId
             },
             data: {
                 mana: this.mana,
                 manaMax: this.manaMax,
-                xp: this.xp,
-                level: this.level,
+                xp: this.getXpManager().getXp(),
+                level: this.getXpManager().getLevel(),
                 health: this.pv,
                 power: this.power,
                 maxPower: this.maxPower,
@@ -78,4 +81,6 @@ export default class Profil {
         })
         return this;
     }
+
+
 }

@@ -27,8 +27,15 @@ model Player {
 }
 
 model Item {
-  id          Int      @id @default(autoincrement())
-  type        String
-  level       Int      @default(0)
-  discordId   String
+  id        Int    @id @default(autoincrement())
+  type      String
+  level     Int    @default(0)
+  discordId String
+}
+
+model Ressource {
+  discordId   String @unique
+  stone       Int 
+  dirt        Int
+  coal        Int
 }
