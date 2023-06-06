@@ -33,8 +33,8 @@ export default class Profil extends BaseCommand {
           {name: "<a:hearth:1112982072609488957> Pv", value: "" +player.health + "/" + player.healthMax, inline: true},
           {name: "<a:lightning:1112982744759287888> Power", value: "" +player.power, inline: true},
           {name: "<a:xp:1112989019744247868> Levelsdferbt", value: `**${player.level}**\u200b [${player.xp}Xp/${player.xpMax}]`, inline: true},
-          {name: "<a:diamond:1112990251032522752> Ressources", value: "0", inline: true},
-          {name: "<a:diamond:1112990251032522752> Ressources", value: "1", inline: true}
+          {name: "<a:diamond:1112990251032522752> Ressources miner", value: "0", inline: true},
+          {name: "<a:diamond:1112990251032522752> Ressources wood cutter", value: "1", inline: true}
           )
     await command.reply({embeds: [embeds]})
   }
