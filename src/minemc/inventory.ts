@@ -49,7 +49,6 @@ export class Inventory{
   }
   
   async saveInventory(): Promise<boolean> {
-    console.log(this.ressources)
     delete this.ressources["discordId"];
     const saving = await prisma.ressource.update({
       where: {
@@ -59,7 +58,6 @@ export class Inventory{
         ...this.ressources
       }
     })
-    console.log(saving)
     return true;
   }
 }

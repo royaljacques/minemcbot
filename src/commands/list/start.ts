@@ -57,16 +57,8 @@ export default class Start extends BaseCommand {
                             power: 10,
                             maxPower: 10
                         }
-                        
                     });
-                    const inventoryPlayer = await prisma.inventory.create({
-                        data: {
-                            discordID: command.user.id
-                        }
-                    });
-                    console.log(newplayer, "\n", inventoryPlayer, "\n")
-                    if (!newplayer || !inventoryPlayer) {
-                        
+                    if (!newplayer) {
                         await submitted.reply({ embeds: [ErrorMessages("An error occured while creating your account, please try again later.")] })
                         return;
                     } else {
