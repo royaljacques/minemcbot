@@ -8,5 +8,6 @@ export default class Ready extends Event {
     public execute() : void {
         Index.instance.commandManager.register();
         console.log("Ready !");
+        //console.log(Index.instance.emojis.cache)
     }
 }

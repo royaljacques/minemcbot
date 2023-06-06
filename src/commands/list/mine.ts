@@ -44,14 +44,18 @@ export default class Mine extends BaseCommand {
         }
         const recolt = Math.floor(Math.random() * (multipl * 5 - 1) + 1);
         const mine = this.mine(recolt, pickaxe.level);
-        const xpManager = player.getXpManager().gainXP(mine.xp);
-        const result = Object.entries(mine.contents).map(([key, value]) => `${key}: ${value}`).join("\n");
         
+        const xpManager = player.getXpManager().gainXP(mine.xp);
+        
+        const result = Object.entries(mine.contents).map(([key, value]) => {
+            if(player === null) return;
+            player.getInventory().addRessource(key.toString(), value);
+            return  this.addEmoji(key)+`${key}: ${value}`
+        }).join("\n");
         const embed = new EmbedBuilder()
-            .setTitle("Mine")
-            .setDescription(`You have mined ${recolt} blocks\nYou've gained ${mine.xp} XP.` + xpManager ? "": "")
+            .setTitle("Mine - " + mine.xp + "xp")
+            .setDescription(`You have mined ${recolt} blocks\nYou've gained ${mine.xp} XP.\ntotal xp: ${xpManager.toString()}`)
             .addFields({ name: "Result", value: result });
-
         try{
             player.save();
         }catch(e){
@@ -59,9 +63,20 @@ export default class Mine extends BaseCommand {
         }
         await command.channel?.send({ embeds: [embed] })
         await command.editReply("the bot is not yet finished, please wait for the next update")
-
     }
 
+    addEmoji(type: string): string {
+        switch(type){
+            case "stone":
+                return "<:stone:1113011409169682503>";
+            case "dirt":
+                return "<a:dirt:1115627917637079060>";
+            case "coal":
+                return "<a:coal:1115633073694986260>";
+            default:
+                return "";
+        }
+    }
     getMultiplieRecolt(toolLevel: number): number | undefined {
         if (toolLevel >= 0 && toolLevel <= 10) return 1;
         if (toolLevel > 10 && toolLevel <= 20) return 2;
@@ -90,6 +105,7 @@ export default class Mine extends BaseCommand {
             }
 
         }
+
         return {
             xp: xp,
             contents: {

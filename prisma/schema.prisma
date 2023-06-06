@@ -34,8 +34,8 @@ model Item {
 }
 
 model Ressource {
-  discordId   String @unique
-  stone       Int 
-  dirt        Int
-  coal        Int
+  discordId String @unique
+  stone     Int    @default(0)
+  dirt      Int    @default(0)
+  coal      Int    @default(0)
 }

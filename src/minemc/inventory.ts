@@ -1,18 +1,65 @@
 import { prisma } from "..";
+import { EmbedErrorLogger } from "../util/function";
 
 export class Inventory{
- constructor(public discordID: string){
-   
+
+  private ressources: {
+    [key: string]: number;
+  };
+  constructor(public discordID: string){
+    this.ressources = {};
+    this.initInventory();
   }
-  async initInventory(){
-    const prismaInventory = await prisma.inventory.findUnique({
+  async initInventory(): Promise<boolean>{
+    try{
+      const prismaInventory= await prisma.ressource.findUnique({
+        where: {
+          discordId: this.discordID
+        }
+      })
+      if (prismaInventory == null) {
+        await prisma.ressource.create({
+          data: {
+            discordId: this.discordID
+          }
+        })
+        return true;
+      }
+      Object.entries(prismaInventory).forEach(([key, value]) => {
+        if(key === "discordId") return;
+        this.ressources[key] = <number>value;
+      })
+      return true;
+    }catch(e){
+      console.log(e)
+      EmbedErrorLogger("Error in initInventory function");
+      return false;
+    }
+  
+  }
+  getRessources(): object{
+    return this.ressources;
+  }
+  addRessource(ressource: string, amount: number): void{
+    if(this.ressources[ressource] === undefined){
+      this.ressources[ressource] = amount;
+    }else{
+      this.ressources[ressource] += amount;
+    }
+  }
+  
+  async saveInventory(): Promise<boolean> {
+    console.log(this.ressources)
+    delete this.ressources["discordId"];
+    const saving = await prisma.ressource.update({
       where: {
-        discordID: this.discordID
+        discordId: this.discordID
+      },
+      data: {
+        ...this.ressources
       }
     })
-    if (prismaInventory == null) {
-      return null;
-    }
-    return prismaInventory;
+    console.log(saving)
+    return true;
   }
 }

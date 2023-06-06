@@ -24,7 +24,10 @@ export default class Profil {
             power: number, 
             maxPower: number, 
             language: string,
-            hand: number | null = null
+            hand: number | null = null,
+            private pseudo: string,
+            private health: number,
+            private healthMax: number
         ){
         this.discordId = discordId;
         this.mana = mana;
@@ -38,6 +41,15 @@ export default class Profil {
         this.hand = hand;
     }
 
+    getMaxHealth(): number{
+        return this.healthMax;
+    }
+    getHealth(): number{
+        return this.health
+    }
+    getPseudo(): string{
+        return this.pseudo;
+    }
     getXpManager(): XpManager {
         return this.xpManager;
     }
@@ -79,6 +91,7 @@ export default class Profil {
                 itemInHand: this.hand
             }
         })
+        await this.Inventory.saveInventory();
         return this;
     }
 

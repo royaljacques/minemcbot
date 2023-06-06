@@ -32,7 +32,7 @@ export const getUser = async(discordId: string): Promise<Profil | null>  => {
     if (prismaUser == null) {
         return null;
     }
-    return new Profil(prismaUser.discordId, prismaUser.mana, prismaUser.manaMax, prismaUser.xp, prismaUser.level, prismaUser.health, prismaUser.power, prismaUser.maxPower, prismaUser.language, prismaUser.itemInHand ?? null);
+    return new Profil(prismaUser.discordId, prismaUser.mana, prismaUser.manaMax, prismaUser.xp, prismaUser.level, prismaUser.health, prismaUser.power, prismaUser.maxPower, prismaUser.language, prismaUser.itemInHand ?? null, prismaUser.pseudo, prismaUser.health, prismaUser.healthMax);
 }
 
 
