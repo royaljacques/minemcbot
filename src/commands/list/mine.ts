@@ -14,9 +14,9 @@ export default class Mine extends BaseCommand {
 
     async execute(command: ChatInputCommandInteraction): Promise<void> {
         let player = await getUser(command.user.id);
-        await command.reply('commands on loading');
+        await command.reply( { ephemeral: true , content: 'commands on loading'});
         if (player === null) {
-            await command.editReply("You are not registered in the database, please use /start");
+            await command.editReply({content: "You are not registered in the database, please use /start"});
             return;
         }
         const itemInHand = player.getItemInHand();
@@ -61,8 +61,7 @@ export default class Mine extends BaseCommand {
         }catch(e){
             console.log(e);
         }
-        await command.channel?.send({ embeds: [embed] })
-        await command.editReply("the bot is not yet finished, please wait for the next update")
+        await command.editReply({ embeds: [embed] })
     }
 
     addEmoji(type: string): string {

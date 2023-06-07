@@ -6,7 +6,6 @@ import { EmbedErrorLogger, ErrorMessages } from "../../util/function";
 import { Prisma } from "@prisma/client";
 
 export default class Start extends BaseCommand {
-
     public readonly slashCommand = new SlashCommandBuilder()
         .setName("start")
         .setDescription("starts the game");

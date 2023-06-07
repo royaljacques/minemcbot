@@ -31,6 +31,7 @@ export default class Help extends BaseCommand {
 		const response = await command.reply({
 			content: 'Choose your starter!',
 			components: [row],
+      ephemeral: true
 		});
     const collectorFilter = (i: {user: {id: string}}) => i.user.id === command.user.id;
     try {

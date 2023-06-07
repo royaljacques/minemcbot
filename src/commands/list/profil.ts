@@ -35,7 +35,7 @@ export default class Profil extends BaseCommand {
           {name: "<a:diamond:1112990251032522752> Ressources overworld", value: "0", inline: true},
           {name: "<a:diamond:1112990251032522752> Ressources wood cutter", value: "1", inline: true}
           )
-    await command.reply({embeds: [embeds]})
+    await command.reply({embeds: [embeds], ephemeral: true})
   }
 }
 /*
