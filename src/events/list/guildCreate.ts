@@ -1,4 +1,4 @@
-import { Guild, GuildMember, TextChannel } from "discord.js";
+import { Guild, TextChannel } from "discord.js";
 import Event from "../Event";
 import { generateImage } from "../../util/function";
 import Index from "../..";

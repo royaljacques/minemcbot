@@ -1,7 +1,6 @@
 import BaseCommand from "../baseCommands";
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { CommandsType } from "../baseCommands";
-import { prisma } from "../..";
 import { getLanguage } from "../../util/language";
 import { getUser } from "../../util/function";
 
