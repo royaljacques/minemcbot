@@ -45,6 +45,8 @@ export default class Index extends DiscordClient {
   public async getLoggerChannel(): Promise<TextChannel> {
     return await this.channels.fetch("1112920322824474704") as TextChannel;
   }
+
+  
 }
 
 new Index();

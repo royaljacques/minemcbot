@@ -1,6 +1,7 @@
 import BaseCommand from "../baseCommands";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { CommandsType } from "../baseCommands";
+import { generateImage } from "../../util/function";
 
 export default class Ping extends BaseCommand {
 
@@ -14,7 +15,7 @@ export default class Ping extends BaseCommand {
     "category": CommandsType.FUN
   }
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
-    await command.reply({ content: "Pong !", ephemeral: true })
+    await command.reply("pong");
   }
 }
 /**
