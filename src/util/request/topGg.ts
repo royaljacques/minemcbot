@@ -18,15 +18,18 @@ export const getVote  = async (discordId: string): Promise<boolean>=> {
 }
 
 export class TopGg {
-
   static init() {
     const app = express()
-    
+    app.get('/', (req, res) => {
+      res.send('Hello World!')
+    })
     const webhook = new Webhook(getStringEnv('TOP_GG_TOKEN'))
-    app.post('/dblwebhook', webhook.listener(async vote => {
-      const channel = await  Index.instance.getLoggerChannel()
+    app.post('/dblwebhook', webhook.listener(async (vote) => {
+      console.log(vote)
+      const channel = await Index.instance.getLoggerChannel()
       channel.send(`User ${vote.user} just voted!`)
     }))
-    app.listen(80)
+    app.listen(3000)
+    console.log("top.gg webhook started")
   }
 }

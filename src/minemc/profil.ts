@@ -2,6 +2,7 @@
 import { prisma } from "..";
 import { Inventory } from "./inventory";
 import XpManager from "./player/xpManager";
+import {Chest} from "./misc/chest";
 
 export default class Profil {
     discordId: string;
@@ -14,6 +15,11 @@ export default class Profil {
     language: string;
     Inventory: Inventory;
     hand: number | null;
+    private chestManager: Chest;
+    private pseudo: string;
+    private health: number;
+    private healthMax: number;
+    hasVoted: boolean;
     constructor(
             discordId: string, 
             mana: number, 
@@ -25,9 +31,10 @@ export default class Profil {
             maxPower: number, 
             language: string,
             hand: number | null = null,
-            private pseudo: string,
-            private health: number,
-            private healthMax: number
+            pseudo: string,
+            health: number,
+            healthMax: number,
+            vote: boolean
         ){
         this.discordId = discordId;
         this.mana = mana;
@@ -38,9 +45,17 @@ export default class Profil {
         this.language = language;
         this.Inventory = new Inventory(discordId);
         this.xpManager = new XpManager(level, xp);
+        this.chestManager = new Chest(discordId)
         this.hand = hand;
+        this.pseudo = pseudo;
+        this.health = health;
+        this.healthMax = healthMax;
+        this.hasVoted = vote;
     }
 
+    getChestManager(): Chest{
+        return this.chestManager;
+    }
     getMaxHealth(): number{
         return this.healthMax;
     }
@@ -92,6 +107,7 @@ export default class Profil {
             }
         })
         await this.Inventory.saveInventory();
+        await this.chestManager.saveChest();
         return this;
     }
 

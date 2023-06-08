@@ -29,7 +29,7 @@ export default class Index extends DiscordClient {
       ],
       partials: [Partials.Message, Partials.Channel, Partials.Reaction]
     });
-    TopGg.init();
+    
     Index.startBotTime = Date.parse(new Date().toString()) / 1000;
     // Create bot instance and login it :
     Index.instance = this;
@@ -37,7 +37,9 @@ export default class Index extends DiscordClient {
     // Load events, commands and tasks managers :
     this.eventManager = new EventManager();
     //this.taskManager = new TaskManager();
-    this.login(getStringEnv("BOT_TOKEN"));
+    this.login(getStringEnv("BOT_TOKEN")).then(() => {
+      TopGg.init();
+    });
   }
 
   public async getGuild(): Promise<Guild> {

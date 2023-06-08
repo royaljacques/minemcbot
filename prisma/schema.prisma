@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Player {
-  discordId  String @id
-  pseudo     String @unique
+  discordId  String  @id
+  pseudo     String  @unique
   language   String
   mana       Int
   manaMax    Int
@@ -24,6 +24,7 @@ model Player {
   power      Int
   maxPower   Int
   itemInHand Int?
+  vote       Boolean @default(false)
 }
 
 model Item {
@@ -38,4 +39,15 @@ model Ressource {
   stone     Int    @default(0)
   dirt      Int    @default(0)
   coal      Int    @default(0)
+}
+
+model Chest {
+  discordId String @unique
+  vote      Int    @default(0)
+  common    Int    @default(0)
+  rare      Int    @default(0)
+  epic      Int    @default(0)
+  legendary Int    @default(0)
+  mythic    Int    @default(0)
+  relic     Int    @default(0)
 }

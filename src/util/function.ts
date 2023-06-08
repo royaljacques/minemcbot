@@ -1,11 +1,10 @@
 import { Colors, EmbedBuilder } from "discord.js"
 import Index, { prisma } from "..";
 import Profil from "../minemc/profil";
-
 import { createCanvas, loadImage, CanvasRenderingContext2D, Image } from 'canvas';
 import path from "path";
-
 import { fillTextWithTwemoji } from 'node-canvas-with-twemoji-and-discord-emoji';
+
 export const ErrorMessages = (message: string): EmbedBuilder => {
     const embed = new EmbedBuilder()
         .setTitle("Error")
@@ -13,7 +12,6 @@ export const ErrorMessages = (message: string): EmbedBuilder => {
         .setColor(Colors.Red);
     return embed;
 }
-
 
 export const EmbedErrorLogger = (message: string): void => {
     const embed = new EmbedBuilder()
@@ -36,9 +34,8 @@ export const getUser = async (discordId: string): Promise<Profil | null> => {
     if (prismaUser == null) {
         return null;
     }
-    return new Profil(prismaUser.discordId, prismaUser.mana, prismaUser.manaMax, prismaUser.xp, prismaUser.level, prismaUser.health, prismaUser.power, prismaUser.maxPower, prismaUser.language, prismaUser.itemInHand ?? null, prismaUser.pseudo, prismaUser.health, prismaUser.healthMax);
+    return new Profil(prismaUser.discordId, prismaUser.mana, prismaUser.manaMax, prismaUser.xp, prismaUser.level, prismaUser.health, prismaUser.power, prismaUser.maxPower, prismaUser.language, prismaUser.itemInHand ?? null, prismaUser.pseudo, prismaUser.health, prismaUser.healthMax, prismaUser.vote);
 }
-
 
 export const createPickaxe = async (discordId: string): Promise<{ id: number, type: string, level: number, discordId: string }> => {
     const pickaxe = await prisma.item.create({
@@ -80,3 +77,12 @@ export async function generateImage(pseudo: string, nomServeur: string, nombreMe
     }
     return canvas.toBuffer('image/png');
 }
+
+export function generateRandomNumber(min: number, max: number): number {
+    if (min >= max) {
+      throw new Error("La valeur minimale doit être inférieure à la valeur maximale.");
+    }
+  
+    const randomNumber = Math.random() * (max - min) + min;
+    return Math.floor(randomNumber);
+  }
