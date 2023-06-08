@@ -4,6 +4,7 @@ import { getStringEnv } from "./util/env-variable";
 import EventManager from "./events/EventManager";
 import { PrismaClient } from "@prisma/client";
 import "./util/langs/EN_en.json"
+import { TopGg } from "./util/request/topGg";
 export const prisma = new PrismaClient();
 export default class Index extends DiscordClient {
 
@@ -24,10 +25,11 @@ export default class Index extends DiscordClient {
         GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildBans
+        GatewayIntentBits.GuildMembers
       ],
       partials: [Partials.Message, Partials.Channel, Partials.Reaction]
     });
+    TopGg.init();
     Index.startBotTime = Date.parse(new Date().toString()) / 1000;
     // Create bot instance and login it :
     Index.instance = this;
