@@ -60,7 +60,7 @@ export async function generateImage(pseudo: string, nomServeur: string, nombreMe
     const lineHeight = 40;
     const textX: number = canvas.width / 2;
     const textY: number = canvas.height / 2 - ((3 - 1) * lineHeight) / 2;
-   
+
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -80,9 +80,17 @@ export async function generateImage(pseudo: string, nomServeur: string, nombreMe
 
 export function generateRandomNumber(min: number, max: number): number {
     if (min >= max) {
-      throw new Error("La valeur minimale doit être inférieure à la valeur maximale.");
+        throw new Error("La valeur minimale doit être inférieure à la valeur maximale.");
     }
-  
+
     const randomNumber = Math.random() * (max - min) + min;
     return Math.floor(randomNumber);
-  }
+}
+
+export function replaceAll(text: string, balise: string[], value: string[]): string {
+    let newText = text;
+    for (let i = 0; i < balise.length; i++) {
+        newText = newText.replace(balise[i], value[i]);
+    }
+    return newText;
+}

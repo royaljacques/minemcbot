@@ -1,7 +1,8 @@
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import BaseCommand, { CommandsType } from "../baseCommands";
 import { prisma } from "../..";
-import { EmbedErrorLogger, createPickaxe, getUser } from "../../util/function";
+import { EmbedErrorLogger, createPickaxe, getUser, replaceAll } from "../../util/function";
+import { getLanguage } from "../../util/language";
 export default class Mine extends BaseCommand {
     public readonly help = {
         "name": "mine",
@@ -19,6 +20,7 @@ export default class Mine extends BaseCommand {
             await command.editReply({content: "You are not registered in the database, please use /start"});
             return;
         }
+        const language = player.language;
         const itemInHand = player.getItemInHand();
         let pickaxe;
         if (itemInHand === null) {
@@ -32,14 +34,14 @@ export default class Mine extends BaseCommand {
                 }
             })
             if (!pickaxe) {
-                await command.editReply("You have not a pickaxe in your hand");
+                await command.editReply(getLanguage("mine_no_pickaxe", language));
                 return;
             }
         }
         const multipl = this.getMultiplieRecolt(pickaxe.level);
         if (multipl === undefined) {
             EmbedErrorLogger("Error in getMultiplieRecolt function, undefined value by level");
-            command.editReply("Error contact the developper (/info)");
+            command.editReply(getLanguage("mine_error", language));
             return;
         }
         const recolt = Math.floor(Math.random() * (multipl * 5 - 1) + 1);
@@ -54,7 +56,7 @@ export default class Mine extends BaseCommand {
         }).join("\n");
         const embed = new EmbedBuilder()
             .setTitle("Mine - " + mine.xp + "xp")
-            .setDescription(`You have mined ${recolt} blocks\nYou've gained ${mine.xp} XP.\ntotal xp: ${xpManager.toString()}`)
+            .setDescription(replaceAll(getLanguage("mine_recolt_message", language), ["{xp}", "{recolt}", "{totalxp}"], [mine.xp.toString(), recolt.toString(), xpManager.toString()]))
             .addFields({ name: "Result", value: result });
         try{
             player.save();
@@ -114,4 +116,7 @@ export default class Mine extends BaseCommand {
             }
         }
     }
+    //fonction repplace all balise of this texte by value 
+    //exemple: replaceAll("hello {name} {names}", ["{name}", {names}], ["world", "royal"]) => "hello world royal"
+   
 }

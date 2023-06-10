@@ -2,7 +2,6 @@ import BaseCommand from "../baseCommands";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { CommandsType } from "../baseCommands";
 import { getVote } from "../../util/request/topGg";
-import { prisma } from "../..";
 import { EmbedErrorLogger, generateRandomNumber, getUser } from "../../util/function";
 
 export default class Ping extends BaseCommand {
@@ -18,8 +17,6 @@ export default class Ping extends BaseCommand {
   }
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     const vote = await getVote(command.user.id)
-
-    console.log(vote)
     if (vote) {
       command.reply({ content: "on loading" })
       const user =  await getUser(command.user.id);

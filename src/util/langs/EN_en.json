@@ -9,5 +9,8 @@
     "info_embed_field_discordserver": "Discord server",
     "info_embed_field_uptime": "Uptime",
     "info_embed_field_invite": "Invite",
-    "info_embed_field_api": "Api"
+    "info_embed_field_api": "Api",
+    "mine_no_pickaxe": "You have not a pickaxe in your hand", 
+    "mine_error": "Error contact the developper (/info)", 
+    "mine_recolt_message": "You have mined {recolt} blocks\nYou've gained {xp} XP.\ntotal xp: {totalxp}"
 }

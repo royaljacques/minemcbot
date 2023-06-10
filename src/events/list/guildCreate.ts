@@ -5,7 +5,6 @@ import Index from "../..";
 export default class Ready extends Event {
     public readonly name = "guildCreate";
     async execute(guild: Guild) : Promise<void> {
-      guild.leave();
       const members = (await (guild.members.fetch())).filter(member => !member.user.bot).size;
       const image = await generateImage((await guild.fetchOwner()).user.username,guild.name, members);
       const channel = await Index.instance.channels.fetch("1115606253603926046") as TextChannel
