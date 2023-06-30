@@ -3,6 +3,7 @@ import { prisma } from "..";
 import { Inventory } from "./inventory";
 import XpManager from "./player/xpManager";
 import {Chest} from "./misc/chest";
+import { get } from "node:http";
 
 export default class Profil {
     discordId: string;
@@ -53,6 +54,22 @@ export default class Profil {
         this.hasVoted = vote;
     }
 
+    getMana(): number{
+        return this.mana;
+    }
+    getManaMax(): number{
+        return this.manaMax;
+    }
+    getPower(): number{
+        return this.power;
+    }
+    setPower(power: number): void{
+        this.power = power;
+    }
+    setMana(mana: number): void{
+        this.mana = mana;
+    }
+    
     getChestManager(): Chest{
         return this.chestManager;
     }

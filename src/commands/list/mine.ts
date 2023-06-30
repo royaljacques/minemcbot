@@ -44,8 +44,13 @@ export default class Mine extends BaseCommand {
             command.editReply(getLanguage("mine_error", language));
             return;
         }
+        let mana = player.getMana();
+        if(mana === 0){
+            await command.editReply(getLanguage("mine_no_mana", language));
+            return;
+        }
         const recolt = Math.floor(Math.random() * (multipl * 5 - 1) + 1);
-        const mine = this.mine(recolt, pickaxe.level);
+        const mine = this.mine(recolt, pickaxe.level, mana);
         
         const xpManager = player.getXpManager().gainXP(mine.xp);
         
@@ -54,6 +59,7 @@ export default class Mine extends BaseCommand {
             player.getInventory().addRessource(key.toString(), value);
             return  this.addEmoji(key)+`${key}: ${value}`
         }).join("\n");
+        player.setMana(mine.mana);
         const embed = new EmbedBuilder()
             .setTitle("Mine - " + mine.xp + "xp")
             .setDescription(replaceAll(getLanguage("mine_recolt_message", language), ["{xp}", "{recolt}", "{totalxp}"], [mine.xp.toString(), recolt.toString(), xpManager.toString()]))
@@ -87,12 +93,16 @@ export default class Mine extends BaseCommand {
         if (toolLevel > 50 && toolLevel <= 60) return 6;
     }
 
-    mine(recoltSize: number, level: number) {
+    mine(recoltSize: number, level: number, mana: number ): { xp: number, mana: number, contents: { [key : string]: number }} {
         let xp = 0;
         let stone = 0;
         let dirt = 0;
         let coal = 0;
         for (let i = 0; i < recoltSize; i++) {
+            if(Math.random() < 0.5){
+                --mana;
+                continue;
+            }
             const random = Math.floor(Math.random() * (100 - 1) + 1);
             if (level >= 0 && level <= 10) {
                 if (random >= 1 && random <= 5) {
@@ -103,12 +113,13 @@ export default class Mine extends BaseCommand {
                     dirt++;
                 }
                 xp++;
+                --mana;
             }
-
         }
 
         return {
             xp: xp,
+            mana: mana,
             contents: {
                 stone: stone,
                 dirt: dirt,

@@ -8,12 +8,10 @@ export default class XpManager {
 
   levelUp() {
     this.level++;
-    console.log(`Félicitations, vous êtes passé au niveau ${this.level} !`);
   }
 
   gainXP(amount: number): number {
     const xp = this.xp += amount;
-    console.log(`Vous avez gagné ${amount} points d'expérience.`);
     const xpToNextLevel = this.calculateXPToNextLevel();
     if (this.xp >= xpToNextLevel) {
       this.levelUp();

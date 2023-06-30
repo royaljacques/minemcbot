@@ -5,6 +5,7 @@ import EventManager from "./events/EventManager";
 import { PrismaClient } from "@prisma/client";
 import "./util/langs/EN_en.json"
 import { TopGg } from "./util/request/topGg";
+import { updateMana } from "./task/manaTimer";
 export const prisma = new PrismaClient();
 export default class Index extends DiscordClient {
 
@@ -37,6 +38,7 @@ export default class Index extends DiscordClient {
     // Load events, commands and tasks managers :
     this.eventManager = new EventManager();
     //this.taskManager = new TaskManager();
+   setInterval(updateMana, 1000 * 60 * 3);
     this.login(getStringEnv("BOT_TOKEN")).then(() => {
       TopGg.init();
     });

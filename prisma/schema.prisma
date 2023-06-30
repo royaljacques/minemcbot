@@ -25,6 +25,7 @@ model Player {
   maxPower   Int
   itemInHand Int?
   vote       Boolean @default(false)
+  manaTimer  DateTime @default(now())
 }
 
 model Item {
