@@ -1,5 +1,5 @@
 import { Colors, EmbedBuilder } from "discord.js"
-import Index, { prisma } from "..";
+import Index, { prisma } from "../minemc";
 import Profil from "../minemc/profil";
 import { createCanvas, loadImage, CanvasRenderingContext2D, Image } from 'canvas';
 import path from "path";

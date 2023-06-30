@@ -1,7 +1,7 @@
 import BaseCommand from "../baseCommands";
 import { ActionRowBuilder, ChatInputCommandInteraction, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 import { CommandsType } from "../baseCommands";
-import { prisma } from "../..";
+import { prisma } from "../../minemc";
 import { EmbedErrorLogger, ErrorMessages } from "../../util/function";
 import { Prisma } from "@prisma/client";
 

@@ -2,7 +2,7 @@
 import { getStringEnv } from "../env-variable";
 import {Webhook} from "@top-gg/sdk"
 import express from "express"
-import Index from "../..";
+import Index from "../../minemc";
 
 
 const baseUrl = 'https://top.gg/api'

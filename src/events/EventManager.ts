@@ -1,6 +1,6 @@
 
 import { readdirSync } from "node:fs";
-import Index from "..";
+import Index from "../minemc";
 import Event from "./Event";
 export default class EventManager {
   constructor() {

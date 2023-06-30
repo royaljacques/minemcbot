@@ -1,7 +1,7 @@
 import { Guild, TextChannel } from "discord.js";
 import Event from "../Event";
 import { generateImage } from "../../util/function";
-import Index from "../..";
+import Index from "../../minemc";
 export default class Ready extends Event {
     public readonly name = "guildCreate";
     async execute(guild: Guild) : Promise<void> {

@@ -1,5 +1,5 @@
 
-import { prisma } from "..";
+import { prisma } from "../minemc";
 import { Inventory } from "./inventory";
 import XpManager from "./player/xpManager";
 import {Chest} from "./misc/chest";
@@ -69,7 +69,7 @@ export default class Profil {
     setMana(mana: number): void{
         this.mana = mana;
     }
-    
+
     getChestManager(): Chest{
         return this.chestManager;
     }

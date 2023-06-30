@@ -1,4 +1,4 @@
-import { prisma } from "..";
+import { prisma } from "../minemc";
 
 export async function updateMana() {
     console.log("Updating mana...")

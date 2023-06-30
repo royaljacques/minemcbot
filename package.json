@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon --exec node -r @swc-node/register ./src/index.ts",
+    "dev": "npx nodemon --exec node -r @swc-node/register ./src/minemc.ts",
     "build": "tsc --build",
     "start": "node build/index.js",
     "test": "vitest",

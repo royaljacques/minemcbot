@@ -1,4 +1,4 @@
-import { prisma } from "../..";
+import { prisma } from "../../minemc";
 type ChestType = "vote" | "common" | "rare" | "epic" | "legendary" | "mythic" | "special";
 export type ChestCount = Record<ChestType, number>;
 export class Chest {

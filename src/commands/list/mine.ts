@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import BaseCommand, { CommandsType } from "../baseCommands";
-import { prisma } from "../..";
+import { prisma } from "../../minemc";
 import { EmbedErrorLogger, createPickaxe, getUser, replaceAll } from "../../util/function";
 import { getLanguage } from "../../util/language";
 export default class Mine extends BaseCommand {

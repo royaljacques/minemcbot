@@ -38,7 +38,7 @@ export default class Index extends DiscordClient {
     // Load events, commands and tasks managers :
     this.eventManager = new EventManager();
     //this.taskManager = new TaskManager();
-   setInterval(updateMana, 1000 * 60 * 3);
+   
     this.login(getStringEnv("BOT_TOKEN")).then(() => {
       TopGg.init();
     });

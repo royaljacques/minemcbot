@@ -3,7 +3,7 @@ import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "
 import { CommandsType } from "../baseCommands";
 import { getUser } from "../../util/function";
 import { getLanguage } from "../../util/language";
-import Index from "../..";
+import Index from "../../minemc";
 import { Guild } from "discord.js";
 export default class Ping extends BaseCommand {
 
@@ -17,6 +17,7 @@ export default class Ping extends BaseCommand {
     "category": CommandsType.MISC
   }
   public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+    console.log(command)
     const user = await getUser(command.user.id);
     const guilds = await command.client.guilds.fetch();
     //get all users

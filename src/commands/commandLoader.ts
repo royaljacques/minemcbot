@@ -1,7 +1,7 @@
 import { Collection, Routes} from "discord.js";
 import { readdirSync } from "fs";
 import BaseCommand from "./baseCommands";
-import Index from "..";
+import Index from "../minemc";
 
 export default class CommandLoader {
 

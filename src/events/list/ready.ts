@@ -1,4 +1,4 @@
-import Index from "../..";
+import Index from "../../minemc";
 import Event from "../Event";
 
 export default class Ready extends Event {

@@ -1,4 +1,4 @@
-import { prisma } from "..";
+import { prisma } from "../minemc";
 import { EmbedErrorLogger } from "../util/function";
 
 export class Inventory{
