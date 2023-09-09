@@ -29,7 +29,7 @@ export class TopGg {
       const channel = await Index.instance.getLoggerChannel()
       channel.send(`User ${vote.user} just voted!`)
     }))
-    app.listen(3000)
+    app.listen(4000)
     console.log("top.gg webhook started")
   }
 }
