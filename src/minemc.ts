@@ -6,19 +6,15 @@ import { PrismaClient } from "@prisma/client";
 import "./util/langs/EN_en.json"
 import { TopGg, getVote } from './util/request/topGg';
 import { generateImage } from "./util/function";
+import Profil from "./minemc/profil";
 export const prisma = new PrismaClient();
 export default class Index extends DiscordClient {
 
   public static instance: Index;
   public static startBotTime: number;
-
-  // Events and commands managers :
   public readonly eventManager: EventManager;
-
   public readonly commandManager: CommandLoader;
-
-  //public readonly taskManager: TaskManager;
-
+  public readonly profil: Profil;
   constructor() {
 
     super({
@@ -35,19 +31,13 @@ export default class Index extends DiscordClient {
     Index.startBotTime = Date.parse(new Date().toString()) / 1000;
     Index.instance = this;
     this.commandManager = new CommandLoader();
+    this.profil = new Profil();
     this.eventManager = new EventManager();
-   
-    this.on("messageCreate", async (message) => {
-
-      if(message.author.bot) return;
-      console.log(message.author.username + ":  " + message.content)
-    });
     this.login(getStringEnv("BOT_TOKEN")).then(() => {
       TopGg.init();
     });
    
   }
-//1112068413322428499
   public async getGuild(): Promise<Guild> {
     return await this.guilds.fetch("732251741999071303");
   }
@@ -61,6 +51,9 @@ export default class Index extends DiscordClient {
     return await this.channels.fetch("1150828396750839970") as TextChannel;
   }
 
+  public getProfils(): Profil {
+    return this.profil;
+  }
   
 }
 

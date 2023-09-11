@@ -19,7 +19,7 @@ export default class CommandLoader {
       const dynamicImport = await import(`./list/${file}`);
       const command: BaseCommand = new dynamicImport.default();
       this.commands.set(command.name, command);
-
+      console.info(`${command.name} commands loaded`);
       
       const collection = CommandLoader.helpCommandStorages.get(command.help.category);
       if(collection === undefined){ 
@@ -27,6 +27,7 @@ export default class CommandLoader {
       }else{
         const help =Array.from(collection);
         help.push([command.help.name, command.help.description]);
+       
         const col = new Collection<string, string>();
         help.map((value) => {
           col.set(value[0], value[1])

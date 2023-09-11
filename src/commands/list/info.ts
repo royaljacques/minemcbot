@@ -2,7 +2,7 @@ import BaseCommand from "../baseCommands";
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { CommandsType } from "../baseCommands";
 import { getLanguage } from "../../util/language";
-import Index from "../../minemc";
+import Index from '../../minemc';
 import { Guild } from "discord.js";
 export default class Ping extends BaseCommand {
 
@@ -16,7 +16,9 @@ export default class Ping extends BaseCommand {
     "category": CommandsType.MISC
   }
   public async execute(command: ChatInputCommandInteraction) : Promise<void> {
-    
+    console.log("info")
+    const profil = Index.instance.getProfils().getUser(command.user.id);
+    console.log(profil)
   }
 }
 
