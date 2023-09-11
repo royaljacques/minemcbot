@@ -19,7 +19,7 @@ export default class CommandLoader {
       const dynamicImport = await import(`./list/${file}`);
       const command: BaseCommand = new dynamicImport.default();
       this.commands.set(command.name, command);
-      console.info(`${command.name} commands loaded`);
+      console.info(`[✅] command ${command.name} `);
       
       const collection = CommandLoader.helpCommandStorages.get(command.help.category);
       if(collection === undefined){ 
