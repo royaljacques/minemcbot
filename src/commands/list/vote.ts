@@ -17,7 +17,6 @@ export default class Ping extends BaseCommand {
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     const vote = await getVote(command.user.id);
     if(vote) {
-      const user = getUser
       command.reply("Vous avez déjà voté pour le bot");
     } else {
         command.reply("Vous n'avez pas encore voté pour le bot");
