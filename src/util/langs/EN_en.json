@@ -1,17 +1,3 @@
 {
-    "profil_embed_title": "Profile of",
-    "info_embed_title": "Bot Information",
-    "info_embed_field_creator": "Creator",
-    "info_embed_field_version": "version",
-    "info_embed_field_dev_language": "Development language",
-    "info_embed_field_total_guilds": "Total guilds",
-    "info_embed_field_total_users": "Total users",
-    "info_embed_field_discordserver": "Discord server",
-    "info_embed_field_uptime": "Uptime",
-    "info_embed_field_invite": "Invite",
-    "info_embed_field_api": "Api",
-    "mine_no_pickaxe": "You have not a pickaxe in your hand", 
-    "mine_error": "Error contact the developper (/info)", 
-    "mine_recolt_message": "You have mined {recolt} blocks\nYou've gained {xp} XP.\ntotal xp: {totalxp}", 
-    "mine_no_mana": "you don't have enough mana"
+
 }
