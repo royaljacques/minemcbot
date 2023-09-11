@@ -4,7 +4,7 @@ import { getStringEnv } from "./util/env-variable";
 import EventManager from "./events/EventManager";
 import { PrismaClient } from "@prisma/client";
 import "./util/langs/EN_en.json"
-import { TopGg } from "./util/request/topGg";
+import { TopGg, getVote } from './util/request/topGg';
 import { generateImage } from "./util/function";
 export const prisma = new PrismaClient();
 export default class Index extends DiscordClient {
@@ -33,21 +33,19 @@ export default class Index extends DiscordClient {
     
    this.user?.setStatus("invisible");
     Index.startBotTime = Date.parse(new Date().toString()) / 1000;
-    // Create bot instance and login it :
     Index.instance = this;
     this.commandManager = new CommandLoader();
-    // Load events, commands and tasks managers :
     this.eventManager = new EventManager();
    
-    //this.taskManager = new TaskManager();
-   this.on("messageCreate", async (message) => {
+    this.on("messageCreate", async (message) => {
 
-    if(message.author.bot) return;
-    console.log(message.author.username + ":  " + message.content)
-   });
+      if(message.author.bot) return;
+      console.log(message.author.username + ":  " + message.content)
+    });
     this.login(getStringEnv("BOT_TOKEN")).then(() => {
       TopGg.init();
     });
+   
   }
 //1112068413322428499
   public async getGuild(): Promise<Guild> {
@@ -56,6 +54,11 @@ export default class Index extends DiscordClient {
 
   public async getLoggerChannel(): Promise<TextChannel> {
     return await this.channels.fetch("1112920322824474704") as TextChannel;
+  }
+
+  public async getVoteChannel(): Promise<TextChannel> {
+
+    return await this.channels.fetch("1150828396750839970") as TextChannel;
   }
 
   

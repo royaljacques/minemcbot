@@ -1,7 +1,7 @@
 import Index from "../../minemc";
 import fs from "fs";
 import Event from "../Event";
-import { Collection, TextChannel } from "discord.js";
+import { Collection, GuildMember, TextChannel } from "discord.js";
 
 export default class Ready extends Event {
   public readonly name = "ready";

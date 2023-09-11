@@ -1,4 +1,4 @@
-import { Colors, EmbedBuilder } from "discord.js"
+import { Colors, EmbedBuilder, GuildMember } from "discord.js"
 import Index, { prisma } from "../minemc";
 import { addRoundedRectangleToBuffer, addServerLogo,  generateDarkBackround, resizeAndRoundImage } from "./canvas";
 
@@ -29,7 +29,6 @@ export const createPickaxe = async (discordId: string): Promise<{ id: number, ty
             discordId: discordId
         }
     })
-    console.log(pickaxe);
     return pickaxe;
 }
 
@@ -56,4 +55,32 @@ export function replaceAll(text: string, balise: string[], value: string[]): str
         newText = newText.replace(balise[i], value[i]);
     }
     return newText;
+}
+
+export const getuserById = async (id: string): Promise<GuildMember | null> => {
+    let memberFound: GuildMember | null = null; // Variable pour suivre si le membre a été trouvé
+
+    const test = await Index.instance.guilds.cache;
+    test.forEach(async (guild) => {
+      try {
+        if (memberFound) return; // Si le membre a déjà été trouvé, sortir de la boucle
+        // Récupération de tous les membres du serveur (non-bots)
+        const allMembers = (await guild.members.fetch()).filter(member => !member.user.bot);
+        
+        // Recherche du membre avec l'ID spécifique
+        const memberIdToFind = '883693434693619732';
+        const foundMember = allMembers.find(member => member.user.id === memberIdToFind);
+        
+        if (foundMember) {
+          memberFound = foundMember; // Stocker le membre trouvé
+          console.log(`Membre trouvé dans le serveur ${guild.name}: ${foundMember.user.tag}`);
+          // Vous pouvez maintenant utiliser "foundMember" pour accéder aux informations du membre trouvé.
+        } else {
+         console.log(`Membre non trouvé dans le serveur ${guild.name}`);
+        }
+      } catch (error: any) {
+         console.error(error.message);
+      }
+    });
+    return memberFound;
 }
