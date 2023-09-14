@@ -7,6 +7,7 @@ import "./util/langs/EN_en.json"
 import { TopGg, getVote } from './util/request/topGg';
 import { generateImage } from "./util/function";
 import Profil from "./minemc/profil";
+import ButtonLoader from "./commands/buttonLoader";
 export const prisma = new PrismaClient();
 export default class Index extends DiscordClient {
 
@@ -14,6 +15,7 @@ export default class Index extends DiscordClient {
   public static startBotTime: number;
   public readonly eventManager: EventManager;
   public readonly commandManager: CommandLoader;
+  public readonly buttonsManager: ButtonLoader;
   public readonly profil: Profil;
   constructor() {
 
@@ -31,6 +33,7 @@ export default class Index extends DiscordClient {
     Index.startBotTime = Date.parse(new Date().toString()) / 1000;
     Index.instance = this;
     this.commandManager = new CommandLoader();
+    this.buttonsManager = new ButtonLoader();
     this.profil = new Profil();
     this.eventManager = new EventManager();
     this.login(getStringEnv("BOT_TOKEN")).then(() => {
