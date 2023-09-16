@@ -52,3 +52,9 @@ model Chest {
   mythic    Int    @default(0)
   relic     Int    @default(0)
 }
+
+model serverConfig{
+  serverId String @id @unique
+  onlyChannel Boolean @default(false)
+  channel String? @default("")
+}

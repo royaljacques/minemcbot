@@ -10,6 +10,15 @@ export const ErrorMessages = (message: string): EmbedBuilder => {
     return embed;
 }
 
+export const ErrorLineMessages = (error: Error, message: string): EmbedBuilder => {
+    const embed = new EmbedBuilder()
+        .setTitle("Error")
+        .setDescription(error.stack?.split("\n\n")[1] +"\n"+message)
+        .setColor(Colors.Red);
+    return embed;
+}
+
+
 export const EmbedErrorLogger = (message: string): void => {
     const embed = new EmbedBuilder()
         .setTitle("Error")

@@ -8,5 +8,6 @@ export default class Ready extends Event {
 
   public async execute(): Promise<void> {
     console.log("Ready!");
+    Index.instance.commandManager.register();
   }
 }
