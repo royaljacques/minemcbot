@@ -1,4 +1,4 @@
-import { Guild, TextChannel, GuildChannelManager, ChannelType } from "discord.js";
+import { Guild, TextChannel, GuildChannelManager, ChannelType, ButtonBuilder, ButtonStyle, ActionRowBuilder } from "discord.js";
 import Index from "../../minemc";
 import Event from "../Event";
 import { generateImage } from "../../util/function";
@@ -27,13 +27,21 @@ export default class Ready extends Event {
     }
     const channel = await Index.instance.channels.fetch(firstAvailableChannel.id) as TextChannel;
 
+
+    const button: ButtonBuilder = new ButtonBuilder()
+        .setCustomId("config")
+        .setLabel("config")
+        .setStyle(ButtonStyle.Danger);
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
+    channel.send({
+      content: "Thank you for inviting me to your server! I'm here to assist and make your Discord experience better. If you have any questions or need help, feel free to ask. Let's make this server awesome together!",
+      components: [row]
+    });
+
     const channels = await Index.instance.channels.fetch("1115606253603926046") as TextChannel;
     generateImage(guild.name, await guild.iconURL({"extension": "png"})).then((buffer) => {
       channels.send({files: [buffer]});
     })
-    generateImage(guild.name, await guild.iconURL({ extension: "png" })).then((buffer) => {
-      channel.send({ files: [buffer] });
-    });
   }
 
   // Fonction pour trouver un salon par nom

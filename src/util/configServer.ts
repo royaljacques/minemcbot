@@ -59,13 +59,14 @@ export const sendSetupOnlyChannel  = async (interaction: ButtonInteraction) =>{
                                 onlyChannel: true
                             }
                         })
-                        interaction.reply({content: `Le channel ${channelName} a été selectionné`, ephemeral: true});
+                        interaction.reply({content: `the  channel ${channelName} have been selectionned`, ephemeral: true});
                     } 
                 });
             });
         }
     )
 }
+
   /*
      console.log(ia)
         const err =  new Error();

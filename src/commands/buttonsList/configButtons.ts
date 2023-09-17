@@ -29,7 +29,7 @@ export default class ConfigButtons extends BaseButtons{
                   if (interaction.customId === 'config:yes') {
                     sendSetupOnlyChannel(interaction);
                   } else {
-                    command.followUp({ content: 'no', ephemeral: true });
+                    command.followUp({ content: 'you have cancel config server', ephemeral: true });
                   }
                 } 
               });

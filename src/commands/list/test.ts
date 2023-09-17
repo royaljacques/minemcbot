@@ -18,7 +18,7 @@ export default class Ping extends BaseCommand {
         .setCustomId("config")
         .setLabel("config")
         .setStyle(ButtonStyle.Danger);
-    const row = new ActionRowBuilder().addComponents(button);
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
     await command.reply(
         {content: "test", components: [row]
     });
