@@ -1,7 +1,7 @@
 import { Collection, Routes} from "discord.js";
 import { readdirSync } from "fs";
 import BaseCommand from "./baseCommands";
-import Index from "../minemc";
+import Index, { prisma } from "../minemc";
 
 export default class CommandLoader {
 
@@ -42,10 +42,18 @@ export default class CommandLoader {
   private async listener() : Promise<void> {
     Index.instance.on("interactionCreate", async interaction => {
       if (!interaction.isChatInputCommand()) return;
-
       const command = this.commands.get(interaction.commandName);
-
-      if (command) command.execute(interaction);
+      prisma.serverConfig.findUnique({where: {serverId: interaction.guildId?.toString()}}).then(async (config) => {
+        if(config === null){
+          if (command) command.execute(interaction);
+        }else{
+          if(config.channel === interaction.channel?.id.toString()){
+            if (command) command.execute(interaction);
+          }else{
+            interaction.reply({content: "you don't use this command on this channel ", ephemeral: true})
+          }
+        }
+      });
     });
   }
 
