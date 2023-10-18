@@ -1,7 +1,7 @@
 import BaseCommand from "../baseCommands";
 import { ActionRowBuilder, ChatInputCommandInteraction, ModalActionRowComponentBuilder, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 import { CommandsType } from "../baseCommands";
-import { prisma } from "../../minemc";
+import Index, { prisma } from "../../minemc";
 
 export default class Ping extends BaseCommand {
 
@@ -20,12 +20,13 @@ export default class Ping extends BaseCommand {
       i.deferUpdate();
       return i.user.id === command.user.id;
     };
-   
-    prisma.player.findUnique({where: {discordId: command.user.id.toString()}}).then(async (player) => {
-      if(player === null){
+
+    prisma.player.findUnique({ where: { discordId: command.user.id.toString() } }).then(async (player) => {
+      console.log(player);
+      if (player === null) {
         const modal: ModalBuilder = new ModalBuilder()
-        .setCustomId("start:modal")
-        .setTitle("start")
+          .setCustomId("start:modal")
+          .setTitle("start")
 
         const pseudo = new TextInputBuilder()
           .setCustomId("start:pseudo")
@@ -34,15 +35,33 @@ export default class Ping extends BaseCommand {
           .setStyle(TextInputStyle.Short)
         const row = new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(pseudo);
         modal.addComponents(row);
-        await command.showModal(modal).then(async() => {
-         command.awaitModalSubmit({time: 60000, filter: collectorFilter}).then(async (modalCollector) => {
-          command.channel?.send("you are ready to start the adventure `" + modalCollector.fields.getTextInputValue("start:pseudo") + "`");
-          console.log();
-         });
+        await command.showModal(modal).then(async () => {
+          try {
+            command.awaitModalSubmit({ time: 60000, filter: collectorFilter }).then(async (modalCollector) => {
+              command.user.id
+              const newPlayer = await prisma.player.create({
+                "data": {
+                  "discordId": command.user.id.toString(),
+                  "pseudo": modalCollector.fields.getTextInputValue("start:pseudo"),
+                }
+              });
+              if(!newPlayer){
+                await command.reply("an error has occurred");
+                return;
+              }else{
+                Index.instance.getProfils().addUser(command.user.id.toString());
+                command.channel?.send("you are ready to start the adventure `" + modalCollector.fields.getTextInputValue("start:pseudo") + "`");
+
+              }
+
+            });
+          } catch (e) {
+            console.log(e);
+          }
         });
-       }else{
+      } else {
         await command.reply("you have already start the adventure");
-       }
+      }
     });
   }
 }
