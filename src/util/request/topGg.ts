@@ -27,9 +27,11 @@ export class TopGg {
     })
     const webhook = new Webhook(getStringEnv('TOP_GG_TOKEN'))
     app.post('/dblwebhook', webhook.listener(async (vote) => {
+      console.log(vote)
       getuserById(vote.user).then(async (user: GuildMember | null) => {
+        const channel = await Index.instance.getVoteChannel();
         if(user) {
-          const channel = await Index.instance.getVoteChannel();
+          
           channel.send(`User <@${vote.user}> just voted!`)
           try{
             user.send("Thanks for voting! You can vote again in 12 hours here: https://top.gg/bot/1112497189458038907/vote")
@@ -39,10 +41,12 @@ export class TopGg {
             channel.send(e.message)
             console.log(e.message)
           }
+        }else{
+          channel.send(`User <@${vote.user}> just voted!`)
         }
       })      
     }))
-    app.listen(4000)
+    app.listen(3005)
     console.log("top.gg webhook started")
   }
 }

@@ -77,13 +77,12 @@ export const getuserById = async (id: string): Promise<GuildMember | null> => {
         const allMembers = (await guild.members.fetch()).filter(member => !member.user.bot);
         
         // Recherche du membre avec l'ID spécifique
-        const memberIdToFind = '883693434693619732';
+        const memberIdToFind = id;
         const foundMember = allMembers.find(member => member.user.id === memberIdToFind);
         
         if (foundMember) {
           memberFound = foundMember; // Stocker le membre trouvé
-          console.log(`Membre trouvé dans le serveur ${guild.name}: ${foundMember.user.tag}`);
-          // Vous pouvez maintenant utiliser "foundMember" pour accéder aux informations du membre trouvé.
+          return memberFound;
         } else {
          console.log(`Membre non trouvé dans le serveur ${guild.name}`);
         }
@@ -91,5 +90,5 @@ export const getuserById = async (id: string): Promise<GuildMember | null> => {
          console.error(error.message);
       }
     });
-    return memberFound;
+    return memberFound !== null ? memberFound : null;
 }
