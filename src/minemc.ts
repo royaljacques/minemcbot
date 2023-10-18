@@ -3,7 +3,7 @@ import CommandLoader from "./commands/commandLoader";
 import { getStringEnv } from "./util/env-variable";
 import EventManager from "./events/EventManager";
 import { PrismaClient } from "@prisma/client";
-import "./util/langs/EN_en.json"
+import "./util/langs/en.json"
 import { TopGg, getVote } from './util/request/topGg';
 import { generateImage } from "./util/function";
 import Profil from "./minemc/profil";
