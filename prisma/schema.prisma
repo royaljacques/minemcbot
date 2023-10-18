@@ -13,16 +13,16 @@ datasource db {
 model Player {
   discordId  String  @id
   pseudo     String  @unique
-  language   String
-  mana       Int
-  manaMax    Int
-  xp         Int
-  xpMax      Int
-  level      Int
-  health     Int
-  healthMax  Int
-  power      Int
-  maxPower   Int
+  language   String @default("en")
+  mana       Int @default(10)
+  manaMax    Int @default(10)
+  xp         Int @default(0)
+  xpMax      Int @default(50)
+  level      Int @default(0)
+  health     Int @default(25)
+  healthMax  Int @default(25)
+  power      Int @default(0)
+  maxPower   Int @default(10)
   itemInHand Int?
   vote       Boolean @default(false)
   manaTimer  DateTime @default(now())
