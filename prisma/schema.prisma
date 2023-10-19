@@ -47,12 +47,15 @@ model Chest {
   vote      Int    @default(0)
   common    Int    @default(0)
   rare      Int    @default(0)
-  epic      Int    @default(0)
   legendary Int    @default(0)
   mythic    Int    @default(0)
   relic     Int    @default(0)
 }
 
+model dailyReward{
+  discordId String @unique
+  date      DateTime
+}
 model serverConfig{
   serverId String @id @unique
   onlyChannel Boolean @default(false)

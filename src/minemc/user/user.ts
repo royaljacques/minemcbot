@@ -1,4 +1,8 @@
+import ChestInventory from "./inventory/chestInventory";
+
 export default class User {
+
+    private ChestInventory: ChestInventory;
     constructor(
         public discordId: string,
         public pseudo: string,
@@ -15,8 +19,10 @@ export default class User {
         public itemInHand: number | null,
         public manaTimer: Date
     ) {
+
+        this.ChestInventory = new ChestInventory(this.discordId);
     }
-    
+
     public getDiscordId(): string {
         return this.discordId;
     }
@@ -71,5 +77,9 @@ export default class User {
 
     public getManaTimer(): Date {
         return this.manaTimer;
+    }
+
+    public getChestInventory(): ChestInventory {
+        return this.ChestInventory;
     }
 }

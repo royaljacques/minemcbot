@@ -1,8 +1,10 @@
 import { log } from 'node:console';
 import Index, { prisma } from '../minemc';
 import User from './user/user';
+import ChestInventory from './user/inventory/chestInventory';
 export default class Profil {
     public user: User[] = [];
+   
     constructor() {
         this.databaseLoader();
     }
@@ -57,4 +59,5 @@ export default class Profil {
 
         return this.user.find((user) => user.getDiscordId() === id);
     }
+    
 }

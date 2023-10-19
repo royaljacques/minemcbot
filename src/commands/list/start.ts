@@ -45,15 +45,15 @@ export default class Ping extends BaseCommand {
                   "pseudo": modalCollector.fields.getTextInputValue("start:pseudo"),
                 }
               });
+              await prisma.chest.create({"data":{"discordId":command.user.id.toString()}})
+              
               if(!newPlayer){
                 await command.reply("an error has occurred");
                 return;
               }else{
                 Index.instance.getProfils().addUser(command.user.id.toString());
                 command.channel?.send("you are ready to start the adventure `" + modalCollector.fields.getTextInputValue("start:pseudo") + "`");
-
               }
-
             });
           } catch (e) {
             console.log(e);
