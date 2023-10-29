@@ -1,6 +1,7 @@
 import BaseCommand from "../baseCommands";
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { CommandsType } from "../baseCommands";
+import Index from "../../minemc";
 
 export default class Ping extends BaseCommand {
 
@@ -14,7 +15,18 @@ export default class Ping extends BaseCommand {
     "category": CommandsType.FUN
   }
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
-    await command.reply("pong");
+    command.reply('pinging').then(m => {
+      const embed = new EmbedBuilder()
+        .setTitle("bot latency")
+        .setFields({
+          name: "latency",
+          value: `${m.createdTimestamp - command.createdTimestamp}ms`,
+        }, {
+          name: "api latency",
+          value: `${Math.round(Index.instance.ws.ping)}ms`,
+        });
+      m.edit({ embeds: [embed] });
+    });
   }
 }
 /**
